@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Let Me Play Jinx</title>
+<meta name="description" content="Champ-select briefing: why NyantaNeko#Nyaah should be your Jinx. Season 2026 ranked stats, support synergies, gameplan and build.">
+<meta name="theme-color" content="#17131d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik:wght@400;500;700;900&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --wall:#17131d; --wall2:#211a2a; --brick:#2b2236; --ink:#f6effc; --dim:#b9aec6;
+  --pink:#ff4fb0; --blue:#3ad0ff; --yellow:#ffe14d;
+  --good:#8dff5a; --ok:#ffd23a; --bad:#ff5f5f;
+  --marker:"Permanent Marker", "Comic Sans MS", cursive;
+  --body:"Rubik", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem; --s6:6rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--wall);color:var(--ink);font-family:var(--body);font-size:1.0625rem;line-height:1.6;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255,79,176,.10), transparent 40%),
+    radial-gradient(circle at 88% 30%, rgba(58,208,255,.08), transparent 38%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 2px, transparent 2px 42px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 2px, transparent 2px 96px);
+}
+a{color:var(--blue)}
+:focus-visible{outline:3px dashed var(--yellow);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:max(16px,4vw)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(23,19,29,.88);backdrop-filter:blur(8px);border-bottom:2px solid var(--brick)}
+.nav .wrap{display:flex;align-items:center;gap:var(--s2);padding-block:.6rem;flex-wrap:wrap}
+.tag{font-family:var(--marker);font-size:1.35rem;color:var(--pink);text-decoration:none;transform:rotate(-3deg);display:inline-block;text-shadow:2px 2px 0 #000}
+.tag span{color:var(--blue)}
+.acctnav{display:flex;align-items:center;gap:.15rem;background:#000;border:2px solid var(--brick);border-radius:999px;padding:.15rem .35rem}
+.acctnav button.tag{background:none;border:0;cursor:pointer;padding:.15rem .55rem;border-radius:999px;font-size:1.05rem;opacity:.45;transition:opacity .15s}
+.acctnav button.tag:hover{opacity:.8}
+.acctnav button.tag[aria-pressed="true"]{opacity:1;font-size:1.3rem;background:var(--wall2)}
+@media (max-width:420px){.acctnav button.tag{font-size:.9rem}.acctnav button.tag[aria-pressed="true"]{font-size:1.1rem}}
+.links{display:flex;gap:var(--s2);flex-wrap:wrap;margin-left:auto;align-items:center}
+.links a{color:var(--dim);text-decoration:none;font-weight:500;font-size:.92rem}
+.links a:hover{color:var(--ink)}
+.lang{display:flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--ink);font:700 .8rem var(--body);padding:.3rem .65rem;cursor:pointer;letter-spacing:.06em}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--wall)}
+@media (max-width:720px){.links a.hide-sm{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:3px solid var(--brick)}
+#spray{position:absolute;inset:0;width:100%;height:100%;display:block}
+#spray.on{cursor:crosshair;touch-action:none}
+.hero .wrap{position:relative;padding-block:var(--s5) var(--s4);pointer-events:none}
+.hero .wrap > *{pointer-events:auto}
+.eyebrow{font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem;color:var(--blue)}
+h1{font-family:var(--marker);font-weight:400;line-height:.98;font-size:clamp(2.6rem,8.5vw,6.2rem);margin:.4rem 0 var(--s3);max-width:14ch;text-wrap:balance;text-shadow:4px 4px 0 #000}
+h1 em{font-style:normal;color:var(--pink);display:inline-block;transform:rotate(-4deg)}
+.lede{max-width:52ch;color:var(--dim);font-size:1.12rem;margin:0 0 var(--s3)}
+.hud{display:grid;gap:.6rem;max-width:560px;margin-bottom:var(--s3)}
+.bar{display:grid;grid-template-columns:minmax(9.5rem,auto) 1fr auto;align-items:center;gap:.7rem;font:700 .78rem var(--body);letter-spacing:.1em;text-transform:uppercase}
+.bar .track{height:14px;background:#000;border:2px solid var(--ink);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--good);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)}
+.bar .fill.zero{width:0}
+.bar b{font-variant-numeric:tabular-nums;min-width:6ch;text-align:right}
+@media (max-width:480px){.bar{grid-template-columns:1fr auto}.bar .track{grid-column:1/-1;grid-row:2}}
+.stickers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--s2);margin-block:var(--s4) var(--s2)}
+.sticker{position:relative;background:var(--ink);color:var(--wall);padding:1rem 1.1rem 1.1rem;border-radius:6px;box-shadow:5px 5px 0 #000;transform:rotate(var(--r,-1.5deg));transition:transform .2s}
+.sticker:hover{transform:rotate(0) scale(1.03)}
+.sticker::before{content:"";position:absolute;top:-10px;left:50%;width:62px;height:20px;margin-left:-31px;background:rgba(255,225,77,.75);transform:rotate(-4deg)}
+.sticker .n{font-family:var(--marker);font-size:clamp(1.8rem,4.2vw,2.4rem);line-height:1.05;color:var(--pink);font-variant-numeric:tabular-nums}
+.sticker .l{font-weight:700;font-size:.85rem;line-height:1.3}
+.sticker.b .n{color:#0a86b3}
+.sticker.y{background:var(--yellow)}
+.sticker.y .n{color:var(--wall)}
+.sprayctl{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-top:var(--s2)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font:700 .95rem var(--body);padding:.7rem 1.15rem;border-radius:999px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--ink);color:var(--wall)}
+.btn.hot{background:var(--pink);border-color:var(--pink);color:#1b0a14}
+.btn.hot:hover{background:var(--yellow);border-color:var(--yellow)}
+.btn[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#04202b}
+.hint{font-size:.85rem;color:var(--dim)}
+
+/* ---------- sections ---------- */
+section{padding-block:var(--s5)}
+h2{font-family:var(--marker);font-weight:400;font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.05;margin:0 0 var(--s1);text-wrap:balance}
+h2 .swash{display:block;width:min(260px,70%);height:14px;margin-top:.2rem}
+.sub{color:var(--dim);max-width:60ch;margin:0 0 var(--s4)}
+.drip{color:var(--pink)}
+
+/* pitch */
+.pitch{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--s3)}
+.pitch article{border:2px solid var(--brick);background:var(--wall2);padding:var(--s3);border-radius:4px;position:relative}
+.pitch article:nth-child(2){border-color:var(--pink)}
+.pitch h3{font-family:var(--marker);font-weight:400;font-size:1.6rem;margin:0 0 .2rem;line-height:1.1}
+.pitch .k{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.pitch p{margin:.6rem 0 0;color:var(--dim)}
+
+/* stats */
+.acct{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:var(--s2)}
+.acct .lbl{font-weight:700;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-right:.2rem}
+.acct button{font:700 .92rem var(--body);padding:.45rem .9rem;border-radius:6px;border:2px dashed var(--blue);background:transparent;color:var(--ink);cursor:pointer;transform:rotate(-1deg)}
+.acct button:nth-child(odd){transform:rotate(1deg)}
+.acct button small{display:block;font-weight:500;font-size:.72rem;color:var(--dim)}
+.acct button[aria-pressed="true"]{background:var(--blue);border-style:solid;color:#04202b}
+.acct button[aria-pressed="true"] small{color:#04202b}
+.tabs{display:inline-flex;gap:.4rem;background:#000;padding:.35rem;border-radius:999px;margin-bottom:var(--s3);flex-wrap:wrap}
+.tabs button{border:0;background:transparent;color:var(--dim);font:700 .95rem var(--body);padding:.55rem 1.1rem;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--pink);color:#1b0a14}
+.panel{animation:pop .25s ease-out}
+@keyframes pop{from{transform:translateY(6px)}to{transform:none}}
+.jgrid{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:var(--s4);align-items:start}
+@media (max-width:760px){.jgrid{grid-template-columns:1fr}}
+.donut{position:relative;width:100%;max-width:280px;aspect-ratio:1}
+.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
+.donut .mid{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.donut .mid b{font-family:var(--marker);font-weight:400;font-size:3.4rem;line-height:1;color:var(--ink)}
+.donut .mid span{font-size:.85rem;color:var(--dim)}
+.wl{display:flex;justify-content:center;gap:1rem;font-weight:700;margin-top:.6rem;font-variant-numeric:tabular-nums;max-width:280px}
+.wl .w{color:var(--good)} .wl .l{color:var(--bad)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--s2)}
+.tile{border-left:4px solid var(--blue);padding:.2rem 0 .2rem 1rem}
+.tile .v{font-family:var(--marker);font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .c{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.tile .x{font-size:.9rem;color:var(--dim)}
+.tile.p{border-color:var(--pink)} .tile.y{border-color:var(--yellow)}
+.share{margin-top:var(--s4)}
+.share .label{font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem}
+.stack{display:flex;height:26px;border:2px solid var(--ink);border-radius:4px;overflow:hidden}
+.stack i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:.6rem;font-size:.88rem;color:var(--dim)}
+.legend span::before{content:"";display:inline-block;width:.8em;height:.8em;border-radius:2px;margin-right:.4em;vertical-align:-1px;background:var(--c)}
+.tablebox{overflow-x:auto;border:2px solid var(--brick);border-radius:4px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-variant-numeric:tabular-nums}
+th,td{padding:.75rem .9rem;text-align:right;border-bottom:1px solid var(--brick);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{background:#000;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+thead button{all:unset;cursor:pointer;display:inline-flex;gap:.3rem;align-items:center}
+thead button:focus-visible{outline:2px dashed var(--yellow)}
+thead th[aria-sort] button{color:var(--yellow)}
+tbody tr:hover{background:var(--wall2)}
+tr.me td:first-child{color:var(--pink);font-weight:700}
+tfoot td{font-weight:700;background:var(--wall2)}
+.wr{display:inline-flex;align-items:center;gap:.5rem}
+.wr i{display:inline-block;width:56px;height:8px;background:#000;border-radius:2px;overflow:hidden;position:relative}
+.wr i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--c)}
+.small{font-size:.86rem;color:var(--dim);margin-top:.8rem}
+.agg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s2);margin-bottom:var(--s3)}
+
+/* synergy */
+.syn{display:grid;grid-template-columns:minmax(260px,1fr) 1.2fr;gap:var(--s4);align-items:start}
+@media (max-width:820px){.syn{grid-template-columns:1fr}}
+.field label{display:block;font-weight:700;margin-bottom:.4rem}
+.field input{width:100%;font:500 1.05rem var(--body);padding:.8rem 1rem;border-radius:6px;border:2px solid var(--ink);background:#000;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:var(--s2)}
+.chip{font:600 .88rem var(--body);padding:.4rem .75rem;border-radius:999px;border:2px solid var(--c);background:transparent;color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--c);color:#111}
+.chip[hidden]{display:none}
+.key{display:flex;gap:1rem;flex-wrap:wrap;font-size:.85rem;color:var(--dim);margin-top:var(--s2)}
+.key span::before{content:"";display:inline-block;width:.75em;height:.75em;border-radius:50%;margin-right:.35em;background:var(--c)}
+.card{background:var(--ink);color:var(--wall);border-radius:8px;padding:var(--s3);box-shadow:8px 8px 0 var(--c,var(--pink));transform:rotate(-.6deg)}
+.card .who{font-family:var(--marker);font-size:2.4rem;line-height:1}
+.card .verdict{display:inline-block;margin-top:.5rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem;padding:.25rem .6rem;background:var(--c);border-radius:3px}
+.card .meter{height:16px;border:2px solid var(--wall);border-radius:3px;margin:var(--s2) 0 .3rem;overflow:hidden;background:#e6ddee}
+.card .meter i{display:block;height:100%;background:var(--c);transition:width .35s ease}
+.card .score{font-weight:700;font-size:.85rem}
+.card p{margin:var(--s2) 0 0;font-size:1.05rem}
+.card .empty{color:#5d536b}
+
+/* gameplan */
+.beats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--s3);counter-reset:none}
+.beat{border-top:4px solid var(--c,var(--pink));padding-top:var(--s2)}
+.beat .when{font-weight:900;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c,var(--pink))}
+.beat h3{font-family:var(--marker);font-weight:400;font-size:1.55rem;line-height:1.1;margin:.3rem 0 .4rem}
+.beat p{margin:0;color:var(--dim)}
+
+/* build */
+.build{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+@media (max-width:760px){.build{grid-template-columns:1fr}}
+.rune{display:flex;gap:1rem;align-items:center;padding:var(--s2);border:2px dashed var(--yellow);border-radius:8px;margin-bottom:var(--s2)}
+.rune svg{flex:none}
+.rune b{font-family:var(--marker);font-weight:400;font-size:1.6rem;display:block;line-height:1.1}
+.rune small{color:var(--dim)}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.list li{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--brick);padding-bottom:.45rem}
+.list li span:last-child{color:var(--dim);font-size:.9rem;text-align:right}
+.path{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.path li{background:var(--wall2);border:2px solid var(--brick);border-radius:6px;padding:.5rem .8rem;font-weight:600;font-size:.95rem}
+.path li.core{border-color:var(--pink)}
+.path li.arrow{background:none;border:0;padding:0;color:var(--pink);font-family:var(--marker);font-size:1.3rem}
+.bh{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;color:var(--blue);margin:var(--s3) 0 .6rem}
+.bh:first-child{margin-top:0}
+
+/* cta */
+.cta{text-align:left;border-top:3px solid var(--brick)}
+.cta h2{font-size:clamp(2.4rem,7vw,4.6rem)}
+.cta .row{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s3)}
+footer{padding-block:var(--s4);color:var(--dim);font-size:.82rem;border-top:2px solid var(--brick)}
+footer p{margin:.3rem 0;max-width:80ch}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--yellow);color:#111;font-weight:700;padding:.6rem 1rem;border-radius:6px;box-shadow:4px 4px 0 #000;z-index:30}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="swash" viewBox="0 0 260 14"><path d="M3 9 C 50 2, 90 12, 140 6 S 220 3, 257 8" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="tag" href="#top">Nyanta<span>Neko</span></a>
+    <div class="links">
+      <a href="#pitch" class="hide-sm" data-i18n="nav.pitch">The Pitch</a>
+      <a href="#stats" data-i18n="nav.stats">Stats</a>
+      <a href="#synergy" class="hide-sm" data-i18n="nav.syn">Supports</a>
+      <a href="#plan" class="hide-sm" data-i18n="nav.plan">Gameplan</a>
+      <a href="#build" class="hide-sm" data-i18n="nav.build">Build</a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-fr" data-lang="fr" aria-pressed="false">FR</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="spray" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="hero.eyebrow">Champ-select briefing · Bot lane</div>
+    <h1 data-i18n="hero.h1">Why you should let me play <em>Jinx</em></h1>
+    <p class="lede" data-acct data-i18n="hero.lede">Hi, I'm your ADC. Before you hover something else, read the receipts. 600 ranked games this season on one champion. I know where the rockets go.</p>
+
+    <div class="hud" aria-label="Scoreboard">
+      <div class="bar"><span data-i18n="hud.me">Your ADC</span><div class="track"><div class="fill" style="width:100%"></div></div><b id="hudPts">4.39M</b></div>
+      <div class="bar"><span data-i18n="hud.them">Their Nexus</span><div class="track"><div class="fill zero"></div></div><b>0 HP</b></div>
+    </div>
+
+    <div class="stickers">
+      <div class="sticker" style="--r:-2deg"><div class="n" id="stPts">4,398,027</div><div class="l" data-acct data-i18n="st.mastery">Jinx mastery points · level 350</div></div>
+      <div class="sticker b" style="--r:1.5deg"><div class="n" id="stGames">600</div><div class="l" data-i18n="st.games">Jinx ranked games · this season</div></div>
+      <div class="sticker y" style="--r:-1deg"><div class="n" id="stWr">53%</div><div class="l" data-acct data-i18n="st.wr">Jinx win rate · 319W 281L</div></div>
+      <div class="sticker" style="--r:2deg"><div class="n" id="stRank">Emerald 4</div><div class="l" data-acct data-i18n="st.rank">Solo/Duo · top 14.3% of NA</div></div>
+    </div>
+
+    <div class="sprayctl">
+      <button class="btn" type="button" id="sprayBtn" aria-pressed="false" data-i18n="hero.spray">Grab the spray can</button>
+      <span class="hint" id="sprayHint" data-i18n="hero.hint">Tag the wall. Drag to spray.</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="pitch">
+  <div class="wrap">
+    <h2><span data-i18n="pitch.h">The pitch</span><svg class="swash drip" aria-hidden="true"><use href="#swash"/></svg></h2>
+    <p class="sub" data-i18n="pitch.sub">Three reasons, short version. Champ select has a timer.</p>
+    <div class="pitch">
+      <article>
+        <div class="k" data-i18n="p1.k">One trick</div>
+        <h3 data-acct data-i18n="p1.h">4.39 million points deep</h3>
+        <p data-acct data-i18n="p1.p">Mastery level 350. That's not a phase. Jinx is 86% of my ranked games this season.</p>
+      </article>
+      <article>
+        <div class="k" data-i18n="p2.k">Receipts</div>
+        <h3 data-i18n="p2.h">Not my first rodeo</h3>
+        <p data-acct data-i18n="p2.p">53% over 600 games, 8.1 CS a minute, 49% kill participation. Every number on this page links back to op.gg.</p>
+      </article>
+      <article>
+        <div class="k" data-i18n="p3.k">Scaling</div>
+        <h3 data-i18n="p3.h">Give me two items</h3>
+        <p data-i18n="p3.p">I don't need to win lane. I need to not lose it. After that, one takedown and I get excited. You know how that ends.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="stats" style="background:rgba(0,0,0,.25)">
+  <div class="wrap">
+    <h2><span data-i18n="stats.h">The receipts</span><svg class="swash" style="color:var(--blue)" aria-hidden="true"><use href="#swash"/></svg></h2>
+    <p class="sub" data-i18n="stats.sub">Season 2026 · Ranked Solo/Duo · NA. Pick a view.</p>
+
+
+    <div class="tabs" role="tablist" aria-label="Stats view">
+      <button role="tab" id="tab-jinx" aria-controls="panel-jinx" aria-selected="true" data-i18n="tab.jinx">Jinx only</button>
+      <button role="tab" id="tab-adc" aria-controls="panel-adc" aria-selected="false" tabindex="-1" data-i18n="tab.adc">All my ADCs</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="panel-jinx" aria-labelledby="tab-jinx">
+      <div class="jgrid">
+        <div>
+          <div class="donut">
+            <svg viewBox="0 0 120 120" role="img" id="donutSvg" aria-label="Jinx win rate">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#000" stroke-width="16"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#ff5f5f" stroke-width="12" stroke-dasharray="314.16" stroke-dashoffset="0"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#8dff5a" stroke-width="12" id="donutWin" stroke-dasharray="0 314.16"/>
+            </svg>
+            <div class="mid"><b id="donutPct">–</b><span data-i18n="j.wr">win rate</span></div>
+          </div>
+          <div class="wl" id="jWL"></div>
+        </div>
+        <div class="tiles" id="jTiles"></div>
+      </div>
+      <div class="share">
+        <div class="label" data-i18n="j.share">Where my ADC games go</div>
+        <div class="stack" id="shareBar" role="img" aria-label="Share of ADC games by champion"></div>
+        <div class="legend" id="shareLegend"></div>
+      </div>
+    </div>
+
+    <div class="panel" role="tabpanel" id="panel-adc" aria-labelledby="tab-adc" hidden>
+      <div class="agg" id="agg"></div>
+      <div class="tablebox">
+        <table id="adcTable">
+          <caption class="sr" data-i18n="t.cap">All ADC champions, Season 2026 ranked solo/duo. Click a column to sort.</caption>
+          <thead><tr>
+            <th scope="col" data-key="name"><button type="button"><span data-i18n="t.champ">Champion</span></button></th>
+            <th scope="col" data-key="g" aria-sort="descending"><button type="button"><span data-i18n="t.games">Games</span></button></th>
+            <th scope="col" data-key="wr"><button type="button"><span data-i18n="t.wr">Win rate</span></button></th>
+            <th scope="col" data-key="kda"><button type="button">KDA</button></th>
+            <th scope="col" data-key="k"><button type="button">K / D / A</button></th>
+            <th scope="col" data-key="kp"><button type="button"><span data-i18n="t.kp">KP</span></button></th>
+            <th scope="col" data-key="cs"><button type="button"><span data-i18n="t.cs">CS/min</span></button></th>
+          </tr></thead>
+          <tbody></tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+      <p class="small" data-i18n="t.note">Totals are weighted by games played. Click a column header to sort.</p>
+    </div>
+  </div>
+</section>
+
+<section id="synergy">
+  <div class="wrap">
+    <h2><span data-i18n="syn.h">Pick your support</span><svg class="swash drip" aria-hidden="true"><use href="#swash"/></svg></h2>
+    <p class="sub" data-i18n="syn.sub">Tell me what you're locking and I'll tell you how bot lane goes.</p>
+    <div class="syn">
+      <div>
+        <div class="field">
+          <label for="supSearch" data-i18n="syn.label">Search a support</label>
+          <input id="supSearch" type="search" autocomplete="off" placeholder="Lulu, Thresh, Nautilus…">
+        </div>
+        <div class="chips" id="chips" role="group" aria-label="Supports"></div>
+        <div class="key">
+          <span style="--c:var(--good)" data-i18n="key.g">We cook</span>
+          <span style="--c:var(--ok)" data-i18n="key.o">Workable</span>
+          <span style="--c:var(--bad)" data-i18n="key.b">Pray</span>
+        </div>
+      </div>
+      <div class="card" id="synCard" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="plan" style="background:rgba(0,0,0,.25)">
+  <div class="wrap">
+    <h2><span data-i18n="plan.h">The gameplan</span><svg class="swash" style="color:var(--yellow)" aria-hidden="true"><use href="#swash"/></svg></h2>
+    <p class="sub" data-i18n="plan.sub">How a game goes when you let me cook.</p>
+    <div class="beats">
+      <div class="beat" style="--c:var(--blue)"><div class="when" data-i18n="b1.w">Levels 1–5</div><h3 data-i18n="b1.h">Farm like it's my job</h3><p data-i18n="b1.p">No coin-flip level 2 all-ins. Rockets on the wave, minigun on the trades. I just need CS.</p></div>
+      <div class="beat" style="--c:var(--yellow)"><div class="when" data-i18n="b2.w">First item</div><h3 data-i18n="b2.h">Poke from a zip code away</h3><p data-i18n="b2.p">Zap from max range, chompers on your CC. Hook, root or knock-up? My traps are already there.</p></div>
+      <div class="beat" style="--c:var(--pink)"><div class="when" data-i18n="b3.w">Two items</div><h3 data-i18n="b3.h">One takedown, then chaos</h3><p data-i18n="b3.p">Peel me for the first kill in a fight. After that, the move speed kicks in and it's a reset party.</p></div>
+      <div class="beat" style="--c:var(--good)"><div class="when" data-i18n="b4.w">Late game</div><h3 data-i18n="b4.h">Dragons, towers, ult across the map</h3><p data-i18n="b4.p">Rockets melt towers. Low-HP enemies anywhere on the map are not safe. Ping it, I'll send it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <h2><span data-i18n="build.h">The build</span><svg class="swash drip" aria-hidden="true"><use href="#swash"/></svg></h2>
+    <p class="sub" data-i18n="build.sub">Season 2026 standard path. Crit, attack speed, and more rockets.</p>
+    <div class="build">
+      <div>
+        <div class="rune">
+          <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="25" fill="none" stroke="#ffe14d" stroke-width="3"/><path d="M16 36 L28 12 L40 36 Z" fill="none" stroke="#ffe14d" stroke-width="3" stroke-linejoin="round"/><circle cx="28" cy="30" r="4" fill="#ff4fb0"/></svg>
+          <div><small data-i18n="build.key">Keystone</small><b>Lethal Tempo</b></div>
+        </div>
+        <ul class="list">
+          <li><span>Triumph</span><span>Precision</span></li>
+          <li><span>Legend: Alacrity</span><span>Precision</span></li>
+          <li><span>Coup de Grace</span><span>Precision</span></li>
+          <li><span>Axiom Arcanist</span><span>Sorcery</span></li>
+          <li><span>Gathering Storm</span><span>Sorcery</span></li>
+          <li><span data-i18n="build.shards">Shards</span><span data-i18n="build.shardsv">Attack speed · Adaptive · Scaling health</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="bh" data-i18n="build.start">Start</div>
+        <ul class="path"><li>Doran's Bow</li><li>2× Health Potion</li><li>Stealth Ward</li></ul>
+        <div class="bh" data-i18n="build.core">Core path</div>
+        <ul class="path">
+          <li class="core">Hexoptics C44</li><li class="arrow" aria-hidden="true">→</li>
+          <li>Berserker's Greaves</li><li class="arrow" aria-hidden="true">→</li>
+          <li class="core">Runaan's Hurricane</li><li class="arrow" aria-hidden="true">→</li>
+          <li class="core">Infinity Edge</li>
+        </ul>
+        <div class="bh" data-i18n="build.late">Late</div>
+        <ul class="path"><li>Lord Dominik's Regards</li><li>Guardian Angel</li></ul>
+        <div class="bh" data-i18n="build.skills">Skill order</div>
+        <ul class="path"><li class="core">Q</li><li class="arrow" aria-hidden="true">›</li><li>W</li><li class="arrow" aria-hidden="true">›</li><li>E</li><li class="arrow" aria-hidden="true">·</li><li data-i18n="build.r">R whenever you can</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="lock">
+  <div class="wrap">
+    <h2 data-i18n="cta.h">Lock it in.</h2>
+    <p class="sub" style="margin-bottom:0" data-i18n="cta.sub">Green bar on your support? We cook. Red bar? Still better than a fill ADC.</p>
+    <div class="row">
+      <button class="btn hot" type="button" id="lockBtn" data-i18n="cta.lock">Let's win this game</button>
+      <a class="btn" id="opggLink" href="https://op.gg/lol/summoners/na/NyantaNeko-Nyaah" target="_blank" rel="noopener" data-i18n="cta.opgg">Check my op.gg ↗</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b id="footTag">NyantaNeko#Nyaah</b> · NA · <span data-i18n="f.snap">Stats snapshot from op.gg, September 22, 2026 · Season 2026 Ranked Solo/Duo.</span></p>
+    <p data-i18n="f.riot">Fan-made page. Not endorsed by Riot Games. League of Legends and Jinx are trademarks of Riot Games, Inc.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- data (op.gg snapshot, 2026-09-22) ---------------- */
+  var COLORS_BY = {Jinx:"#ff4fb0", Xayah:"#3ad0ff", Yunara:"#ffe14d", Tristana:"#8dff5a", Ashe:"#c7a6ff"};
+  var ACCOUNTS = {
+    nyanta: {url:"https://op.gg/lol/summoners/na/NyantaNeko-Nyaah", rankName:"Emerald 4", tag:"NyantaNeko#Nyaah", rank:"E4 · 36 LP", top:14.31, pts:4398027, lv:350, role:92, games:699, jcs:243, adcs:[
+    {name:"Jinx",     w:319, l:281, kda:1.88, k:8,   d:8.5, a:8,   kp:49, cs:8.1},
+    {name:"Xayah",    w:9,   l:18,  kda:1.25, k:4.5, d:9.1, a:6.9, kp:37, cs:7.0, color:"#3ad0ff"},
+    {name:"Yunara",   w:3,   l:7,   kda:0.81, k:3.7, d:8.8, a:3.4, kp:33, cs:7.3, color:"#ffe14d"},
+    {name:"Tristana", w:2,   l:3,   kda:2.54, k:10,  d:7.8, a:9.8, kp:50, cs:7.8, color:"#8dff5a"},
+    {name:"Ashe",     w:0,   l:1,   kda:0.86, k:1,   d:7,   a:5,   kp:50, cs:6.9}
+    ]},
+    tsuha: {url:"https://op.gg/lol/summoners/na/TsuhaHime-NA1", rankName:"Platinum 4", tag:"TsuhaHime#NA1", rank:"P4 · 91 LP", top:28.07, pts:328257, lv:null, role:80, games:51, jcs:245, adcs:[
+    {name:"Jinx",     w:25,  l:16,  kda:2.26, k:11.1, d:8,  a:7,   kp:58, cs:8.1}
+    ]}
+  };
+  function prep(list){ list.forEach(function(c){ c.g = c.w + c.l; c.wr = c.w / c.g * 100; c.color = COLORS_BY[c.name] || "#ccc"; }); return list; }
+  prep(ACCOUNTS.nyanta.adcs); prep(ACCOUNTS.tsuha.adcs);
+  // "Both": merge champions across accounts, weighted by games
+  (function(){
+    var map = {}, order = [];
+    [ACCOUNTS.nyanta, ACCOUNTS.tsuha].forEach(function(acc){
+      acc.adcs.forEach(function(c){
+        var m = map[c.name];
+        if (!m){ m = map[c.name] = {name:c.name, w:0, l:0, K:0, D:0, A:0, KP:0, CS:0}; order.push(c.name); }
+        m.w += c.w; m.l += c.l; m.K += c.k*c.g; m.D += c.d*c.g; m.A += c.a*c.g; m.KP += c.kp*c.g; m.CS += c.cs*c.g;
+      });
+    });
+    var merged = order.map(function(n){ var m = map[n], g = m.w + m.l;
+      return {name:n, w:m.w, l:m.l, k:m.K/g, d:m.D/g, a:m.A/g, kda:(m.K+m.A)/m.D, kp:m.KP/g, cs:m.CS/g}; });
+    var a = ACCOUNTS.nyanta, b = ACCOUNTS.tsuha, jA = a.adcs[0].g, jB = b.adcs[0].g;
+    ACCOUNTS.both = {tag:"both", rank:"E4 + P4", top:null, pts:a.pts + b.pts, lv:null,
+      role:(a.role*a.games + b.role*b.games)/(a.games + b.games), games:a.games + b.games,
+      jcs:(a.jcs*jA + b.jcs*jB)/(jA + jB), adcs:prep(merged)};
+  })();
+  var acctKey = "nyanta";
+  var ADCS = ACCOUNTS[acctKey].adcs;
+
+  // Support ratings: score out of 10 → good (7+), ok (4–6), bad (≤3)
+  var SUPPORTS = [
+    ["Lulu",9,"Polymorph + speed + a shield on me. I'm literally my own Lulu main (34 games). Best duo there is.","Métamorphose + vitesse + bouclier sur moi. Je joue Lulu moi-même (34 parties). Le meilleur duo."],
+    ["Thresh",9,"Hook lands, my chompers are already under them. Lantern gets me out when I overstep.","Le crochet touche, mes chompeurs sont déjà dessous. La lanterne me sauve quand j'avance trop."],
+    ["Nautilus",8,"Guaranteed CC to chain into traps. He starts it, I finish it.","Du contrôle garanti à enchaîner avec mes pièges. Il commence, je finis."],
+    ["Leona",8,"All-in at 2 with root chains. Just don't go without me.","All-in au niveau 2 avec ses contrôles. Juste, pars pas sans moi."],
+    ["Braum",8,"Stacks passive on my autos, blocks the skillshots aimed at me. Stat-checked best Jinx pairing.","Il charge sa passive avec mes attaques et bloque ce qui vise ma tête. Un des meilleurs duos en stats."],
+    ["Milio",8,"Range on my rockets and cleanses on me. Hyper-carry heaven.","Plus de portée sur mes roquettes et des purges. Le paradis de l'hyper-carry."],
+    ["Janna",7,"Peel peel peel. I'll never get touched and I'll scale for free.","Protection, protection, protection. Personne me touche et je scale tranquille."],
+    ["Nami",7,"Bubble into chompers is a kill. Her E on my autos hurts.","Bulle + chompeurs = kill. Son E sur mes attaques fait mal."],
+    ["Rell",7,"Big engage for teamfights. She dives, I clean up.","Gros engage en teamfight. Elle plonge, je nettoie."],
+    ["Taric",7,"Stun + invulnerable Jinx at two items? Unfair.","Étourdissement + Jinx invulnérable à deux items? Injuste."],
+    ["Karma",6,"Good poke lane. Shield and speed help me kite.","Bonne lane de poke. Bouclier et vitesse pour kiter."],
+    ["Soraka",6,"Infinite sustain lane. We don't win early, but we don't lose either.","Sustain infini. On gagne pas tôt, mais on perd pas non plus."],
+    ["Rakan",6,"Great engage, but he'll go in fast. Give me a sec to catch up.","Super engage, mais il part vite. Laisse-moi une seconde."],
+    ["Alistar",6,"Headbutt-pulverize into traps works. Late peel is great.","Combo W-Q dans mes pièges, ça marche. Bon peel en fin de partie."],
+    ["Blitzcrank",5,"One hook wins the game, one miss loses the lane. Coin flip.","Un grab gagne la partie, un raté perd la lane. Pile ou face."],
+    ["Pyke",5,"Kills early, but no peel late. I'll need to play very safe.","Des kills tôt, mais aucun peel tard. Je vais jouer très safe."],
+    ["Senna",5,"Two carries in one lane. Fun, but low sustain and low CC.","Deux carrys dans la même lane. Fun, mais peu de soin et de contrôle."],
+    ["Bard",5,"Roams a lot. I'll farm alone. Portals are cute though.","Il roam beaucoup. Je farm seule. Les portails sont cute par contre."],
+    ["Seraphine",5,"Strong teamfight ult, but lane can get pushed around.","Grosse ult en teamfight, mais la lane peut se faire bousculer."],
+    ["Yuumi",4,"Heals are nice, but no CC to set up my traps. I'll carry the lane.","Les soins sont bien, mais aucun contrôle pour mes pièges."],
+    ["Zyra",3,"Plants take my farm and she takes my kills. We'll survive.","Les plantes volent mon farm et elle mes kills. On va survivre."],
+    ["Brand",3,"Damage, but zero peel. If they dive me, I'm gone.","Des dégâts, mais aucun peel. S'ils plongent, je suis morte."],
+    ["Vel'Koz",3,"Poke is fine, but I need someone who stands in front of me.","Le poke est correct, mais j'ai besoin de quelqu'un devant moi."],
+    ["Xerath",2,"Two artillery pieces, zero frontline. Stats agree: rough pair.","Deux artilleries, zéro ligne de front. Les stats sont d'accord : duo difficile."],
+    ["Hwei",2,"Low-winrate pairing for Jinx. I'll farm and pray.","Duo à faible taux de victoire pour Jinx. Je farm et je prie."]
+  ].map(function(s){ return {name:s[0], score:s[1], en:s[2], fr:s[3]}; });
+
+  /* ---------------- i18n ---------------- */
+  var FR = {
+    "nav.pitch":"Le pitch","nav.stats":"Stats","nav.syn":"Supports","nav.plan":"Plan de match","nav.build":"Build",
+    "hero.eyebrow":"Briefing de sélection · Bot lane",
+    "hero.h1":"Pourquoi tu devrais me laisser jouer <em>Jinx</em>",
+    "hero.lede":"Salut, c'est ton ADC. Avant de survoler autre chose, regarde les preuves. 600 parties classées cette saison sur une seule championne. Je sais où vont les roquettes.",
+    "hud.me":"Ton ADC","hud.them":"Leur Nexus",
+    "st.mastery":"Points de maîtrise Jinx · niveau 350","st.games":"Parties classées Jinx · cette saison","st.wr":"Taux de victoire Jinx · 319V 281D","st.rank":"Solo/Duo · top 14,3 % de NA",
+    "hero.spray":"Prends la canette","hero.hint":"Tague le mur. Glisse pour peinturer.","hero.sprayOn":"Pose la canette","hero.hintOn":"Glisse sur le mur. Clique encore pour arrêter.",
+    "pitch.h":"Le pitch","pitch.sub":"Trois raisons, version courte. La sélection a un chrono.",
+    "p1.k":"One trick","p1.h":"4,39 millions de points","p1.p":"Maîtrise niveau 350. C'est pas une phase. Jinx, c'est 86 % de mes parties classées cette saison.",
+    "p2.k":"Les preuves","p2.h":"C'est pas mon premier rodéo","p2.p":"53 % sur 600 parties, 8,1 CS par minute, 49 % de participation aux kills. Chaque chiffre ici vient de op.gg.",
+    "p3.k":"Scaling","p3.h":"Donne-moi deux items","p3.p":"J'ai pas besoin de gagner ma lane. J'ai besoin de pas la perdre. Après ça, un kill et je m'excite. Tu connais la suite.",
+    "stats.h":"Les preuves","stats.sub":"Saison 2026 · Classé Solo/Duo · NA. Choisis une vue.","acct.lbl":"Compte","acct.both":"Les deux","acct.bothx":"combinés","j.csx":"{n} CS par partie","j.kpx":"des kills de l'équipe","j.mastx":"points de maîtrise","j.lv":"niveau {n}","j.rolex":"{n} % des parties classées","j.rankx":"Top {n} % de NA","j.rankb":"Deux comptes, une Jinx","j.total":"parties",
+    "tab.jinx":"Jinx seulement","tab.adc":"Tous mes ADC",
+    "j.wr":"victoires","j.cs":"CS par min","j.kp":"Participation","j.mast":"Maîtrise","j.role":"Rôle principal","j.rank":"Solo/Duo","j.share":"Où vont mes parties d'ADC",
+    "t.cap":"Tous les champions ADC, saison 2026 classé solo/duo. Clique une colonne pour trier.","t.champ":"Champion","t.games":"Parties","t.wr":"Victoires","t.kp":"Part.","t.cs":"CS/min","t.note":"Les totaux sont pondérés par le nombre de parties. Clique un en-tête pour trier.","t.total":"Tous les ADC",
+    "agg.games":"Parties d'ADC","agg.wr":"Taux de victoire","agg.kda":"KDA moyen","agg.cs":"CS/min moyen",
+    "syn.h":"Choisis ton support","syn.sub":"Dis-moi ce que tu prends et je te dis comment va la bot lane.","syn.label":"Cherche un support",
+    "key.g":"On cuisine","key.o":"Jouable","key.b":"On prie",
+    "v.g":"On cuisine","v.o":"Jouable","v.b":"On prie","syn.score":"Synergie","syn.empty":"Choisis un support à gauche.","syn.none":"Pas dans ma liste. Prends-le quand même, je m'adapte.",
+    "plan.h":"Le plan de match","plan.sub":"Comment se passe une partie quand tu me laisses cuisiner.",
+    "b1.w":"Niveaux 1–5","b1.h":"Farmer comme si c'était ma job","b1.p":"Pas d'all-in à pile ou face au niveau 2. Roquettes sur la vague, minigun pour les échanges. J'ai juste besoin de CS.",
+    "b2.w":"Premier item","b2.h":"Poke de l'autre bout de la carte","b2.p":"Zap à portée max, chompeurs sur ton contrôle. Crochet, root ou knock-up? Mes pièges sont déjà là.",
+    "b3.w":"Deux items","b3.h":"Un kill, puis le chaos","b3.p":"Protège-moi pour le premier kill d'un combat. Après, la vitesse embarque et c'est la fête des resets.",
+    "b4.w":"Fin de partie","b4.h":"Dragons, tours, ult à travers la carte","b4.p":"Les roquettes fondent les tours. Un ennemi à bas PV n'importe où n'est pas en sécurité. Ping-le, je l'envoie.",
+    "build.h":"Le build","build.sub":"Chemin standard saison 2026. Critique, vitesse d'attaque et encore plus de roquettes.",
+    "build.key":"Clé de voûte","build.shards":"Fragments","build.shardsv":"Vitesse d'attaque · Adaptatif · Vie évolutive","build.start":"Départ","build.core":"Items clés","build.late":"Fin de partie","build.skills":"Ordre des sorts","build.r":"R dès que possible",
+    "cta.h":"Verrouille.","cta.sub":"Barre verte sur ton support? On cuisine. Barre rouge? Toujours mieux qu'un ADC en fill.","cta.lock":"On gagne cette game","cta.opgg":"Voir mon op.gg ↗","cta.toast":"Jinx verrouillée. GLHF!",
+    "hero.lede.nyanta":"Salut, c'est ton ADC. Avant de survoler autre chose, regarde les preuves. 600 parties classées cette saison sur une seule championne. Je sais où vont les roquettes.",
+    "hero.lede.tsuha":"Salut, c'est ton ADC. Mon deuxième compte, même Jinx. 41 parties classées cette saison, 61 % gagnées. Je sais où vont les roquettes.",
+    "st.mastery.nyanta":"Points de maîtrise Jinx · niveau 350","st.mastery.tsuha":"Points de maîtrise Jinx · ce compte",
+    "st.wr.nyanta":"Taux de victoire Jinx · 319V 281D","st.wr.tsuha":"Taux de victoire Jinx · 25V 16D",
+    "st.rank.nyanta":"Solo/Duo · top 14,3 % de NA","st.rank.tsuha":"Solo/Duo · 91 LP · top 28,1 % de NA",
+    "p1.h.nyanta":"4,39 millions de points","p1.h.tsuha":"Même trick, deuxième compte",
+    "p1.p.nyanta":"Maîtrise niveau 350. C'est pas une phase. Jinx, c'est 86 % de mes parties classées cette saison.",
+    "p1.p.tsuha":"328 K points de maîtrise ici aussi. Jinx, c'est 80 % des parties classées de ce compte.",
+    "p2.p.nyanta":"53 % sur 600 parties, 8,1 CS par minute, 49 % de participation aux kills. Chaque chiffre ici vient de op.gg.",
+    "p2.p.tsuha":"61 % sur 41 parties, 8,1 CS par minute, 58 % de participation aux kills. Chaque chiffre ici vient de op.gg.",
+    "f.snap":"Stats tirées de op.gg le 22 septembre 2026 · Saison 2026 Classé Solo/Duo.",
+    "f.riot":"Page faite par une fan. Non approuvée par Riot Games. League of Legends et Jinx sont des marques de Riot Games, Inc."
+  };
+  var EN_EXTRA = {
+    "hero.sprayOn":"Put the can down","hero.hintOn":"Drag across the wall. Click again to stop.",
+    "t.total":"All ADCs","agg.games":"ADC games","agg.wr":"Win rate","agg.kda":"Average KDA","agg.cs":"Average CS/min",
+    "v.g":"We cook","v.o":"Workable","v.b":"Pray","syn.score":"Synergy","syn.empty":"Pick a support on the left.","syn.none":"Not on my list. Lock it anyway, I'll adapt.",
+    "cta.toast":"Jinx locked in. GLHF!",
+    "hero.lede.nyanta":"Hi, I'm your ADC. Before you hover something else, read the receipts. 600 ranked games this season on one champion. I know where the rockets go.",
+    "hero.lede.tsuha":"Hi, I'm your ADC. This is my second account, same Jinx. 41 ranked games this season, 61% of them won. I know where the rockets go.",
+    "st.mastery.nyanta":"Jinx mastery points · level 350","st.mastery.tsuha":"Jinx mastery points · this account",
+    "st.wr.nyanta":"Jinx win rate · 319W 281L","st.wr.tsuha":"Jinx win rate · 25W 16L",
+    "st.rank.nyanta":"Solo/Duo · top 14.3% of NA","st.rank.tsuha":"Solo/Duo · 91 LP · top 28.1% of NA",
+    "p1.h.nyanta":"4.39 million points deep","p1.h.tsuha":"Same trick, second account",
+    "p1.p.nyanta":"Mastery level 350. That's not a phase. Jinx is 86% of my ranked games this season.",
+    "p1.p.tsuha":"328K mastery points here too. Jinx is 80% of this account's ranked games.",
+    "p2.p.nyanta":"53% over 600 games, 8.1 CS a minute, 49% kill participation. Every number on this page links back to op.gg.",
+    "p2.p.tsuha":"61% over 41 games, 8.1 CS a minute, 58% kill participation. Every number on this page links back to op.gg.",
+    "j.cs":"CS per min","j.csx":"{n} CS per game","j.kp":"Kill participation","j.kpx":"of my team's kills","j.mast":"Mastery","j.mastx":"mastery points","j.lv":"level {n}",
+    "j.role":"Main role","j.rolex":"{n}% of ranked games","j.rank":"Solo/Duo","j.rankx":"Top {n}% of NA","j.rankb":"Two accounts, one Jinx","j.total":"games"
+  };
+  var EN = {};
+  document.querySelectorAll("[data-i18n]").forEach(function(el){ EN[el.getAttribute("data-i18n")] = el.innerHTML; });
+  Object.keys(EN_EXTRA).forEach(function(k){ EN[k] = EN_EXTRA[k]; });
+
+  var lang = "en";
+  try { var saved = localStorage.getItem("jinx-lang"); if (saved === "fr" || saved === "en") lang = saved; } catch(e){}
+
+  function t(k){ var d = lang === "fr" ? FR : EN; return d[k] != null ? d[k] : (EN[k] || k); }
+  function num(n, dp){ return n.toLocaleString(lang === "fr" ? "fr-CA" : "en-US", {minimumFractionDigits:dp||0, maximumFractionDigits:dp||0}); }
+
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k = el.getAttribute("data-i18n") + (el.hasAttribute("data-acct") ? "." + acctKey : "");
+      el.innerHTML = t(k);
+    });
+    document.querySelectorAll(".lang button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+    syncSprayLabel(); renderAccount();
+  }
+  document.querySelector(".lang").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-lang]"); if (!b) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem("jinx-lang", lang); } catch(e){}
+    applyLang();
+  });
+
+  /* ---------------- tabs ---------------- */
+  var tabs = [document.getElementById("tab-jinx"), document.getElementById("tab-adc")];
+  function selectTab(i, focus){
+    tabs.forEach(function(tb, j){
+      var on = i === j;
+      tb.setAttribute("aria-selected", String(on));
+      tb.tabIndex = on ? 0 : -1;
+      document.getElementById(tb.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach(function(tb, i){
+    tb.addEventListener("click", function(){ selectTab(i); });
+    tb.addEventListener("keydown", function(e){
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft"){ e.preventDefault(); selectTab((i + 1) % 2, true); }
+    });
+  });
+  if (location.hash === "#adc") selectTab(1);
+
+  /* ---------------- ADC table + aggregates ---------------- */
+  var sortKey = "g", sortDir = -1;
+  function totals(){
+    var g=0,w=0,K=0,D=0,A=0,KP=0,CS=0;
+    ADCS.forEach(function(c){ g+=c.g; w+=c.w; K+=c.k*c.g; D+=c.d*c.g; A+=c.a*c.g; KP+=c.kp*c.g; CS+=c.cs*c.g; });
+    return {g:g, w:w, l:g-w, wr:w/g*100, k:K/g, d:D/g, a:A/g, kda:(K+A)/D, kp:KP/g, cs:CS/g};
+  }
+  function wrColor(wr){ return wr >= 52 ? "var(--good)" : wr >= 45 ? "var(--ok)" : "var(--bad)"; }
+  function row(c, total){
+    var name = total ? t("t.total") : c.name;
+    return "<td>" + name + "</td>" +
+      "<td>" + num(c.g) + " <span style='color:var(--dim)'>(" + c.w + "–" + c.l + ")</span></td>" +
+      "<td><span class='wr'><i style='--w:" + c.wr.toFixed(1) + "%;--c:" + wrColor(c.wr) + "'></i>" + num(c.wr, 1) + "%</span></td>" +
+      "<td>" + num(c.kda, 2) + "</td>" +
+      "<td>" + num(c.k,1) + " / " + num(c.d,1) + " / " + num(c.a,1) + "</td>" +
+      "<td>" + num(c.kp) + "%</td>" +
+      "<td>" + num(c.cs, 1) + "</td>";
+  }
+  function renderTable(){
+    var list = ADCS.slice().sort(function(a,b){
+      var x = a[sortKey], y = b[sortKey];
+      if (typeof x === "string") return x.localeCompare(y) * sortDir;
+      return (x - y) * sortDir;
+    });
+    document.querySelector("#adcTable tbody").innerHTML = list.map(function(c){
+      return "<tr" + (c.name === "Jinx" ? " class='me'" : "") + ">" + row(c) + "</tr>";
+    }).join("");
+    document.querySelector("#adcTable tfoot").innerHTML = "<tr>" + row(totals(), true) + "</tr>";
+    document.querySelectorAll("#adcTable thead th").forEach(function(th){
+      if (th.dataset.key === sortKey) th.setAttribute("aria-sort", sortDir < 0 ? "descending" : "ascending");
+      else th.removeAttribute("aria-sort");
+    });
+  }
+  document.querySelector("#adcTable thead").addEventListener("click", function(e){
+    var th = e.target.closest("th"); if (!th) return;
+    var k = th.dataset.key;
+    if (k === sortKey) sortDir = -sortDir; else { sortKey = k; sortDir = k === "name" ? 1 : -1; }
+    renderTable();
+  });
+  function renderAgg(){
+    var T = totals();
+    var items = [
+      [num(T.g), t("agg.games"), T.w + (lang==="fr"?"V ":"W ") + T.l + (lang==="fr"?"D":"L"), "p"],
+      [num(T.wr,1) + "%", t("agg.wr"), "", "y"],
+      [num(T.kda,2), t("agg.kda"), num(T.k,1) + " / " + num(T.d,1) + " / " + num(T.a,1), ""],
+      [num(T.cs,1), t("agg.cs"), "", "p"]
+    ];
+    document.getElementById("agg").innerHTML = items.map(function(i){
+      return "<div class='tile " + i[3] + "'><div class='c'>" + i[1] + "</div><div class='v'>" + i[0] + "</div><div class='x'>" + i[2] + "</div></div>";
+    }).join("");
+  }
+  function short(n){ return n >= 1e6 ? num(Math.floor(n/1e4)/100, 2) + "M" : num(Math.round(n/1000)) + "K"; }
+  function renderJinx(){
+    var A = ACCOUNTS[acctKey], J = ADCS.filter(function(c){ return c.name === "Jinx"; })[0];
+    var W = lang === "fr" ? "V" : "W", L = lang === "fr" ? "D" : "L";
+    document.getElementById("donutWin").setAttribute("stroke-dasharray", (J.wr / 100 * 314.16).toFixed(1) + " 314.16");
+    document.getElementById("donutPct").textContent = Math.round(J.wr) + "%";
+    document.getElementById("donutSvg").setAttribute("aria-label", "Jinx " + Math.round(J.wr) + "%");
+    document.getElementById("jWL").innerHTML = "<span class='w'>" + J.w + W + "</span><span class='l'>" + J.l + L + "</span><span>" + num(J.g) + " " + t("j.total") + "</span>";
+    var f = function(k, n){ return t(k).replace("{n}", n); };
+    var tiles = [
+      ["p", "KDA", num(J.kda, 2), num(J.k,1) + " / " + num(J.d,1) + " / " + num(J.a,1)],
+      ["",  t("j.cs"), num(J.cs, 1), f("j.csx", num(Math.round(A.jcs)))],
+      ["y", t("j.kp"), num(J.kp) + "%", t("j.kpx")],
+      ["p", t("j.mast"), short(A.pts), num(A.pts) + " " + t("j.mastx") + (A.lv ? " · " + f("j.lv", A.lv) : "")],
+      ["",  t("j.role"), "ADC", f("j.rolex", num(A.role))],
+      ["y", t("j.rank"), A.rank, A.top ? f("j.rankx", num(A.top, 1)) : t("j.rankb")]
+    ];
+    document.getElementById("jTiles").innerHTML = tiles.map(function(x){
+      return "<div class='tile " + x[0] + "'><div class='c'>" + x[1] + "</div><div class='v'>" + x[2] + "</div><div class='x'>" + x[3] + "</div></div>";
+    }).join("");
+  }
+  function renderAccount(){
+    ADCS = ACCOUNTS[acctKey].adcs;
+    var A = ACCOUNTS[acctKey], J = ADCS[0];
+    document.querySelectorAll("#acct button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.acct === acctKey)); });
+    document.getElementById("hudPts").textContent = short(A.pts);
+    document.getElementById("stPts").textContent = num(A.pts);
+    document.getElementById("stGames").textContent = num(J.g);
+    document.getElementById("stWr").textContent = Math.round(J.wr) + "%";
+    document.getElementById("stRank").textContent = A.rankName;
+    document.getElementById("opggLink").href = A.url;
+    document.getElementById("footTag").textContent = A.tag;
+    renderJinx(); renderTable(); renderAgg(); renderShare(); renderCard();
+  }
+  var acctEl = document.getElementById("acct");
+  if (acctEl) acctEl.addEventListener("click", function(e){
+    var b = e.target.closest("button[data-acct]"); if (!b) return;
+    acctKey = b.dataset.acct; applyLang();
+  });
+  function renderShare(){
+    var T = totals();
+    document.getElementById("shareBar").innerHTML = ADCS.map(function(c){
+      return "<i style='width:" + (c.g / T.g * 100).toFixed(2) + "%;background:" + c.color + "' title='" + c.name + "'></i>";
+    }).join("");
+    document.getElementById("shareLegend").innerHTML = ADCS.map(function(c){
+      return "<span style='--c:" + c.color + "'>" + c.name + " · " + num(c.g / T.g * 100, 1) + "%</span>";
+    }).join("");
+  }
+
+  /* ---------------- support synergy ---------------- */
+  var picked = "Lulu";
+  function tier(s){ return s >= 7 ? "g" : s >= 4 ? "o" : "b"; }
+  var TC = {g:"var(--good)", o:"var(--ok)", b:"var(--bad)"};
+  var chipsEl = document.getElementById("chips");
+  chipsEl.innerHTML = SUPPORTS.map(function(s){
+    return "<button type='button' class='chip' data-name=\"" + s.name + "\" style='--c:" + TC[tier(s.score)] + "' aria-pressed='false'>" + s.name + "</button>";
+  }).join("");
+  chipsEl.addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if (!b) return;
+    picked = b.dataset.name; renderCard();
+  });
+  function renderCard(){
+    var card = document.getElementById("synCard");
+    chipsEl.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", String(c.dataset.name === picked)); });
+    var s = SUPPORTS.filter(function(x){ return x.name === picked; })[0];
+    if (!picked){ card.style.setProperty("--c","var(--pink)"); card.innerHTML = "<p class='empty'>" + t("syn.empty") + "</p>"; return; }
+    if (!s){
+      card.style.setProperty("--c","var(--ok)");
+      card.innerHTML = "<div class='who'>" + escapeHTML(picked) + "</div><p>" + t("syn.none") + "</p>";
+      return;
+    }
+    var tr = tier(s.score);
+    card.style.setProperty("--c", TC[tr]);
+    card.innerHTML = "<div class='who'>Jinx + " + s.name + "</div>" +
+      "<span class='verdict'>" + t("v." + tr) + "</span>" +
+      "<div class='meter'><i style='width:" + (s.score * 10) + "%'></i></div>" +
+      "<div class='score'>" + t("syn.score") + " " + s.score + "/10</div>" +
+      "<p>" + (lang === "fr" ? s.fr : s.en) + "</p>";
+  }
+  function escapeHTML(s){ return s.replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  var search = document.getElementById("supSearch");
+  function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z]/g,""); }
+  search.addEventListener("input", function(){
+    var q = norm(search.value), first = null;
+    chipsEl.querySelectorAll(".chip").forEach(function(c){
+      var hit = !q || norm(c.dataset.name).indexOf(q) === 0 || norm(c.dataset.name).indexOf(q) > 0;
+      c.hidden = !hit; if (hit && !first) first = c.dataset.name;
+    });
+    if (q){ picked = first || search.value.trim(); renderCard(); }
+  });
+
+  /* ---------------- CTA toast ---------------- */
+  var toast = document.getElementById("toast"), tt;
+  document.getElementById("lockBtn").addEventListener("click", function(){
+    toast.textContent = t("cta.toast"); toast.hidden = false;
+    clearTimeout(tt); tt = setTimeout(function(){ toast.hidden = true; }, 2200);
+    burst();
+  });
+
+  /* ---------------- spray wall (canvas) ---------------- */
+  var cv = document.getElementById("spray"), ctx = cv.getContext("2d");
+  var hero = document.querySelector(".hero");
+  var sprayOn = false, painting = false, colorIdx = 0;
+  var COLORS = ["#ff4fb0", "#3ad0ff", "#ffe14d", "#8dff5a"];
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var seed = 7;
+  function rnd(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+  function size(){
+    var r = hero.getBoundingClientRect();
+    var snap = null;
+    if (cv.width) { try { snap = ctx.getImageData(0,0,cv.width,cv.height); } catch(e){} }
+    cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    if (snap) ctx.putImageData(snap, 0, 0); else background(r.width, r.height);
+  }
+  function splat(x, y, rad, color, alpha, drips){
+    ctx.fillStyle = color;
+    for (var i = 0; i < rad * 14; i++){
+      var a = rnd() * Math.PI * 2, d = Math.pow(rnd(), 1.8) * rad;
+      ctx.globalAlpha = alpha * (1 - d / rad * .7);
+      ctx.beginPath(); ctx.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, rnd() * 2.4 + .6, 0, 7); ctx.fill();
+    }
+    for (var j = 0; j < (drips || 0); j++){
+      var dx = x + (rnd() - .5) * rad, len = 20 + rnd() * 70;
+      ctx.globalAlpha = alpha * .8;
+      ctx.fillRect(dx, y, 2 + rnd() * 2, len);
+      ctx.beginPath(); ctx.arc(dx + 1.5, y + len, 2.6, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function background(w, h){
+    seed = 7;
+    // big soft clouds
+    for (var i = 0; i < 9; i++){
+      var x = rnd() * w, y = rnd() * h, r = 60 + rnd() * 120;
+      var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      var c = COLORS[i % 2];
+      g.addColorStop(0, c + "30"); g.addColorStop(1, c + "00");
+      ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    // speckle splats w/ drips, mostly on right side so text stays readable
+    for (var k = 0; k < 14; k++){
+      splat(w * (.55 + rnd() * .45), rnd() * h * .8, 10 + rnd() * 26, COLORS[k % COLORS.length], .5, rnd() > .5 ? 2 : 0);
+    }
+    // scribble rocket + cat tag, top right
+    doodle(w, h);
+  }
+  function doodle(w, h){
+    var ox = Math.max(w - 250, w * .62), oy = 40;
+    if (w < 700) { ox = w - 150; oy = 16; }
+    ctx.save(); ctx.translate(ox, oy); ctx.rotate(-.18);
+    ctx.lineWidth = 4; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = "#3ad0ff"; ctx.globalAlpha = .75;
+    // generic rocket
+    ctx.beginPath(); ctx.moveTo(0,40); ctx.lineTo(80,40); ctx.quadraticCurveTo(115,50,80,60); ctx.lineTo(0,60); ctx.closePath(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(10,40); ctx.lineTo(-10,25); ctx.moveTo(10,60); ctx.lineTo(-10,75); ctx.stroke();
+    ctx.strokeStyle = "#ffe14d";
+    ctx.beginPath(); ctx.moveTo(-8,45); ctx.lineTo(-38,40); ctx.moveTo(-8,50); ctx.lineTo(-45,50); ctx.moveTo(-8,55); ctx.lineTo(-38,60); ctx.stroke();
+    // cat head tag
+    ctx.strokeStyle = "#ff4fb0"; ctx.translate(40, 110);
+    ctx.beginPath(); ctx.moveTo(-26,-6); ctx.lineTo(-22,-34); ctx.lineTo(-6,-20); ctx.quadraticCurveTo(0,-22,6,-20); ctx.lineTo(22,-34); ctx.lineTo(26,-6);
+    ctx.quadraticCurveTo(28,22,0,24); ctx.quadraticCurveTo(-28,22,-26,-6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-12,0); ctx.lineTo(-6,4); ctx.moveTo(12,0); ctx.lineTo(6,4); ctx.stroke(); // X-ish eyes
+    ctx.beginPath(); ctx.moveTo(-6,12); ctx.quadraticCurveTo(-3,16,0,12); ctx.quadraticCurveTo(3,16,6,12); ctx.stroke();
+    ctx.restore(); ctx.globalAlpha = 1;
+  }
+  function burst(){
+    var r = hero.getBoundingClientRect();
+    for (var i = 0; i < 6; i++) splat(r.width * (.5 + rnd() * .5), r.height * rnd(), 14 + rnd() * 20, COLORS[i % 4], .8, 2);
+  }
+  function pos(e){ var r = cv.getBoundingClientRect(); return {x:e.clientX - r.left, y:e.clientY - r.top}; }
+  cv.addEventListener("pointerdown", function(e){
+    if (!sprayOn) return; painting = true; cv.setPointerCapture(e.pointerId);
+    colorIdx = (colorIdx + 1) % COLORS.length; var p = pos(e); splat(p.x, p.y, 16, COLORS[colorIdx], .9, 1);
+  });
+  cv.addEventListener("pointermove", function(e){
+    if (!sprayOn || !painting) return; var p = pos(e); splat(p.x, p.y, 14, COLORS[colorIdx], .85, rnd() > .93 ? 1 : 0);
+  });
+  ["pointerup","pointercancel","pointerleave"].forEach(function(ev){ cv.addEventListener(ev, function(){ painting = false; }); });
+
+  var sprayBtn = document.getElementById("sprayBtn");
+  function syncSprayLabel(){
+    sprayBtn.textContent = t(sprayOn ? "hero.sprayOn" : "hero.spray");
+    document.getElementById("sprayHint").textContent = t(sprayOn ? "hero.hintOn" : "hero.hint");
+  }
+  sprayBtn.addEventListener("click", function(){
+    sprayOn = !sprayOn;
+    sprayBtn.setAttribute("aria-pressed", String(sprayOn));
+    cv.classList.toggle("on", sprayOn);
+    // while spraying, let the canvas receive pointer events over the hero text
+    document.querySelector(".hero .wrap").style.pointerEvents = sprayOn ? "none" : "";
+    document.querySelectorAll(".hero .wrap > *").forEach(function(el){ el.style.pointerEvents = sprayOn ? "none" : ""; });
+    document.querySelector(".sprayctl").style.pointerEvents = "auto";
+    syncSprayLabel();
+  });
+
+  var rt; window.addEventListener("resize", function(){ clearTimeout(rt); rt = setTimeout(size, 150); });
+  size();
+  applyLang();
+})();
+</script>
+</body>
+</html>
